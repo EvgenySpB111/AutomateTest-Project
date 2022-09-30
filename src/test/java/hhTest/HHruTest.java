@@ -1,7 +1,9 @@
+/*
+В этом тесте мы 2-мя(сравниваем списки и сравниваем классы) способами тестируем резуме работника
+ */
 package hhTest;
 
 import appleinsider.ru.BaseTest;
-import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.junit.Assert;
 import org.junit.Test;
 
