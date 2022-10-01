@@ -1,7 +1,7 @@
 package hhTest;
 
 public class Resume {
-  private String gender;
+  private  String gender;
   private int age;
   private String city;
   private boolean markTelephone;

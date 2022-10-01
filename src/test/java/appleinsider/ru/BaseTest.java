@@ -1,3 +1,6 @@
+/*
+В этом тесте мы проверяем ключевое слово в ссылке при переходе по поисковому запросу
+ */
 package appleinsider.ru;
 
 import com.codeborne.selenide.Configuration;
