@@ -7,7 +7,7 @@ public class UserData {
   private String last_name;
   private String avatar;
 
-  private UserData() {
+  public UserData() {
   }
   public UserData(Integer id, String email, String first_name, String last_name, String avatar) {
     this.id = id;
@@ -33,15 +33,4 @@ public class UserData {
     return avatar;
   }
 
-
-  @Override
-  public String toString() {
-    return "UserData{" +
-            "id=" + id +
-            ", email='" + email + '\'' +
-            ", first_name='" + first_name + '\'' +
-            ", last_name='" + last_name + '\'' +
-            ", avatar='" + avatar + '\'' +
-            '}';
-  }
 }
