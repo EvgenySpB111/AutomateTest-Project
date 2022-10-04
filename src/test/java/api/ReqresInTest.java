@@ -115,17 +115,4 @@ private final static String URL ="https://reqres.in/";
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
