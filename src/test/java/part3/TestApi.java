@@ -1,11 +1,13 @@
 package part3;
 
+import api.Specification;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.junit.Assert;
 import org.junit.Test;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
@@ -70,6 +72,27 @@ import static io.restassured.RestAssured.given;
               .extract().response();
       JsonPath jsonPath = response.jsonPath();
       // Assert.assertEquals("b8895cc7850ac77",jsonPath.get("token"));
+    }
+    @Test
+    public void bookGetTest() {
+      Response response = given()
+              .when()
+              .contentType(ContentType.JSON)
+              .get("https://restful-booker.herokuapp.com/booking")
+              .then().log().all()
+              .statusCode(200)
+              .statusLine("HTTP/1.1 200 OK")
+              .contentType("application/json; charset=utf-8")
+              .header("Via","1.1 vegur")
+              .header("Server","Cowboy")
+              .extract().response();
+      JsonPath jsonPath = response.jsonPath();
+      List<Integer> books = jsonPath.getList("bookingid");
+      int firstBook = books.get(0);
+      int finalBook = books.get(books.size()-1);
+      Assert.assertEquals(6927,firstBook);
+      Assert.assertEquals(6509,finalBook);
+
     }
 
   }
