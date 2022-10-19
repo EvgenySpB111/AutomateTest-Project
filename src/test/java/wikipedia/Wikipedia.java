@@ -1,10 +1,9 @@
 package wikipedia;
 
-import appleinsider.ru.BaseTest;
+import core.BaseTestSelenide;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -14,7 +13,7 @@ import java.util.Random;
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.open;
 
-public class Wikipedia extends BaseTest {
+public class Wikipedia extends BaseTestSelenide {
   @Test
   public void wikipediaHrefTest() {
     Selenide.open("https://ru.wikipedia.org/wiki/Java");

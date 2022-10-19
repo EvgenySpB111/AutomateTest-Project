@@ -3,14 +3,14 @@
  */
 package hhTest;
 
-import appleinsider.ru.BaseTest;
+import core.BaseTestSelenide;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class HHruTest extends BaseTest {
+public class HHruTest extends BaseTestSelenide {
   private  final  static String URL = "https://spb.hh.ru/resume/eec18e26ff0b4584840039ed1f456337777132";
 
   @Test
@@ -24,6 +24,13 @@ public class HHruTest extends BaseTest {
     expectedAttributes.put(ResumePage.REMOVAL,true);
     Map<String,Object> actualAttributes = resumePage.getAttributes();
     Assert.assertEquals(expectedAttributes,actualAttributes);
+  }
+
+
+
+  @Test
+  public void test1() {
+
   }
   @Test
   public void CheckResumeTest(){

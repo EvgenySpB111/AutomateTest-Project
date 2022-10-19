@@ -6,6 +6,8 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +15,24 @@ import java.util.Map;
 import static io.restassured.RestAssured.given;
 
   public class TestApi {
+
+    @Test
+    public void authTest() {
+      Map<String,String> login = new HashMap<>();
+      login.put("username" ,"admin");
+      login.put("password" ,"password123");
+      Response response = given()
+              .body(login)
+              .when()
+              .contentType(ContentType.JSON)
+              .post("https://restful-booker.herokuapp.com/auth")
+              .then().log().all()
+              .statusCode(200)
+              .extract().response();
+      JsonPath jsonPath = response.jsonPath();
+      String token = jsonPath.get("token");
+      System.out.println(token);
+    }
     @Test
     public void getResponseTest() {
       Response response = given()
@@ -90,9 +110,71 @@ import static io.restassured.RestAssured.given;
       List<Integer> books = jsonPath.getList("bookingid");
       int firstBook = books.get(0);
       int finalBook = books.get(books.size()-1);
-      Assert.assertEquals(6927,firstBook);
-      Assert.assertEquals(6509,finalBook);
+     // Assert.assertEquals(6383,firstBook);
+      //Assert.assertEquals(2562,finalBook);
 
+    }
+    @Test
+    public void createBookApiTest() {
+    CreateBooking createBook = new CreateBooking("Jim","Brown",111,true,
+            new Bookingdates("2018-01-01", "2019-01-01"),"Breakfast");
+    Response response =  given()
+            .body(createBook)
+            .when()
+            .contentType(ContentType.JSON)
+            .post("https://restful-booker.herokuapp.com/booking")
+            .then().log().all()
+            .statusCode(200)
+            .statusLine("HTTP/1.1 200 OK")
+            .contentType("application/json; charset=utf-8")
+            .header("Content-Length", "197")
+            .extract().response();
+    JsonPath jsonPath = response.jsonPath();
+    int bookId = jsonPath.get("bookingid");
+    String name = jsonPath.get("booking.firstname");
+    String data = jsonPath.get("booking.bookingdates.checkout");
+    String add = jsonPath.get("booking.additionalneeds");
+   // Assert.assertEquals(9941,bookId); постоянно изменяется
+    Assert.assertEquals("Jim",name);
+    Assert.assertEquals("2019-01-01",data);
+    Assert.assertEquals("Breakfast",add);
+
+    }
+    @Test
+    public void delayedResponseTest() {
+      Response response = given()
+              .queryParam("id",1)
+              .when()
+              .contentType(ContentType.JSON)
+              .get("https://reqres.in/api/users?delay=3")
+              .then().log().all()
+              .statusCode(200)
+              .statusLine("HTTP/1.1 200 OK")
+              .extract().response();
+      JsonPath jsonPath = response.jsonPath();
+      int perPage = jsonPath.get("per_page");
+      List<String> name = jsonPath.get("data.first_name");
+      String nameFirst = name.get(0);
+      Assert.assertEquals(6,perPage);
+      Assert.assertEquals("George",nameFirst);
+    }
+    @Test
+    public void createUser() {
+      Map< String,String> create = new HashMap<>();
+      create.put("name","morpheus");
+      create.put("job","leader");
+      Response response = given()
+              .body(create)
+              .when()
+              .contentType(ContentType.JSON)
+              .post("https://reqres.in/api/users")
+              .then().log().all()
+              .statusCode(201)
+              .statusLine("HTTP/1.1 201 Created")
+              .extract().response();
+      JsonPath jsonPath = response.jsonPath();
+      Assert.assertEquals("morpheus",jsonPath.get("name"));
+      Assert.assertEquals("leader",jsonPath.get("job"));
     }
 
   }
